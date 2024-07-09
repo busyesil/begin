@@ -1,0 +1,13 @@
+{
+    "name": "Intelligibility Test",
+    "description": "Subjective test methodology for evaluating speech communication systems that include noise suppression algorithm. Utilizes the P.835 standards.",
+    "duration": "10 minutes",
+    "requirements": "Headphones",
+    "dimensions": "16-bit, 44.1 kHz",
+    "purpose": "Identifying perceptible differences between samples.",
+    "input_files": [
+      "test1_audio.wav",
+      "test1_noise.wav"
+    ],
+    "test_script": "p835.py"
+  }
