@@ -85,6 +85,100 @@ class MainWindow(QMainWindow):
         windowLayout.addWidget(button)
         self.stack.addWidget(window)
 
+    # Ask how many audio the user would like to upload:
+    def askAudioFiles(self):
+        window = QWidget()
+        windowLayout = QVBoxLayout()
+        window.setLayout(windowLayout)
+
+        #Clear the layout before adding any widgets
+        while windowLayout.count():
+            item = windowLayout.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+
+        #Add to stack
+        self.stack.addWidget(window)
+        self.stack.setCurrentIndex(self.stack.count() - 1)
+
+        #Ask number of audio sources
+        self.askNumFiles = QLabel("How many audio files would you like to include in your test?")
+        windowLayout.addWidget(self.askNumFiles)
+
+        # Dropdown menu for number of Files
+        self.filesNum = QComboBox()
+        self.filesNum.addItems(["1","2","3","4","5","6","7","8","9","9","10","11","12","13","14","15","16","17","18","19","20"])
+        windowLayout.addWidget(self.quesNum)
+
+        #ContinueButton
+        continueButton = QPushButton("Continue")
+        continueButton.clicked.connect(self.openEmptyWindow)
+
+
+                # At this point, the front-end would connect to the back-end. 
+                # Instead of openEmptyWindow, the continue Button on this page would go to a new page that would
+                # allow users to upload audio files. 
+                # Then, a certain number of questions would be generated. Each question would be customizable. This is what the back-end script would do.
+                
+
+
+        windowLayout.addWidget(continueButton)
+
+        #backButton
+        backButton = QPushButton("Back")
+        backButton.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        windowLayout.addWidget(backButton)
+
+         # Add new widgets to QStackedWidget
+        self.stack.addWidget(window)
+
+        # Set the current index to show the new widget
+        self.stack.setCurrentIndex(self.stack.count() - 1)
+
+
+    
+
+    # Ask how many questions per audio source
+    def askQuestions(self):
+        window = QWidget()
+        windowLayout = QVBoxLayout()
+        window.setLayout(windowLayout)
+
+        #Clear the layout before adding any widgets
+        while windowLayout.count():
+            item = windowLayout.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+
+        #Add to stack
+        self.stack.addWidget(window)
+        self.stack.setCurrentIndex(self.stack.count() - 1)
+
+        # Ask number of questions
+        self.askUserNum = QLabel("How many questions per audio source would you like to include in your test?")
+        windowLayout.addWidget(self.askUserNum)
+
+        # Dropdown menu for number of Questions
+        self.quesNum = QComboBox()
+        self.quesNum.addItems(["1","2","3","4","5","6","7","8","9","9","10","11","12","13","14","15","16","17","18","19","20"])
+        windowLayout.addWidget(self.quesNum)
+
+        #ContinueButton
+        continueButton = QPushButton("Continue")
+        continueButton.clicked.connect(self.askAudioFiles)
+        windowLayout.addWidget(continueButton)
+
+        #backButton
+        backButton = QPushButton("Back")
+        backButton.clicked.connect(lambda: self.stack.setCurrentIndex(0))
+        windowLayout.addWidget(backButton)
+
+         # Add new widgets to QStackedWidget
+        self.stack.addWidget(window)
+
+        # Set the current index to show the new widget
+        self.stack.setCurrentIndex(self.stack.count() - 1)
+
 
 
     # A/B COMPARISON TEST
@@ -106,12 +200,13 @@ class MainWindow(QMainWindow):
         self.testInfo = QLabel("Test Details:\n Name: A/B Comparison Test\n Description: Presents listeners with anonymized audio samples and asks them to compare and evaluate samples based on specified criteria.\n Duration: 10 minutes\n Requirements: Headphones\n Dimensions: 16-bit, 44.1 kHz\n Purpose: Identifying perceptible differences between samples.")
         windowLayout.addWidget(self.testInfo)
 
-        loadTemplateButton = QPushButton("Load Test Template")
-        loadTemplateButton.clicked.connect(self.openEmptyWindow)
-        windowLayout.addWidget(loadTemplateButton)
+        continueButton = QPushButton("Continue")
+        continueButton.clicked.connect(self.askQuestions)
+        windowLayout.addWidget(continueButton)
+        
 
         backButton = QPushButton("Back")
-        backButton.clicked.connect(lambda: self.stack.setCurrentIndex((self.stack.currentIndex() - 1) % self.stack.count()))
+        backButton.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         windowLayout.addWidget(backButton)
 
         # Add new widgets to QStackedWidget
@@ -141,12 +236,12 @@ class MainWindow(QMainWindow):
         self.testInfo = QLabel("Test Details:\n Name: Comparison Mean Opinion Score - 7 Point\n Description: Presents listeners with anonymized audio samples and asks them to compare and evaluate samples based on specified criteria.\n Duration: 10 minutes\n Requirements: Headphones\n Dimensions: 16-bit, 44.1 kHz\n Purpose: Identifying perceptible differences between samples.")
         windowLayout.addWidget(self.testInfo)
 
-        loadTemplateButton = QPushButton("Load Test Template")
-        loadTemplateButton.clicked.connect(self.openEmptyWindow)
-        windowLayout.addWidget(loadTemplateButton)
+        continueButton = QPushButton("Continue")
+        continueButton.clicked.connect(self.askQuestions)
+        windowLayout.addWidget(continueButton)
 
         backButton = QPushButton("Back")
-        backButton.clicked.connect(lambda: self.stack.setCurrentIndex((self.stack.currentIndex() - 1) % self.stack.count()))
+        backButton.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         windowLayout.addWidget(backButton)
 
         # Add new widgets to QStackedWidget
@@ -197,6 +292,12 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
+
+
+
+
+
+
 
 
 
